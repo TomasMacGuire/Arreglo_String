@@ -20,6 +20,7 @@ int buscaDato(int a[],int val, int dato);
 int capicua(int a[],int val);
 void intercambio(int *a,int *b);
 void invertirArreglo(int a[],int val);
+int buscaMenor(int a[], int val);
 
 
 int main(){
@@ -195,4 +196,21 @@ void intercambio(int *a,int *b){
     int aux=*a;
     *a=*b;
     *b=aux;
+}
+int buscaMenor(int a[], int val)
+{
+    int i=0;
+    int posMenor=i;
+    if(val>=0)
+    {
+        for(i=1; i<val; i++)
+        {
+            if(a[i]<a[posMenor])
+            {
+                posMenor=i;
+            }
+        }
+    }
+
+    return posMenor;
 }
