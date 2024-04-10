@@ -21,6 +21,8 @@ int capicua(int a[],int val);
 void intercambio(int *a,int *b);
 void invertirArreglo(int a[],int val);
 int buscaMenor(int a[], int val);
+void insertar(int a[], int i, int dato);
+void ordenar(int a[],int val);
 
 
 int main(){
@@ -35,17 +37,27 @@ int main(){
     char nombre[21];///el ultimo caracter siempre es \0 que indica que termina el string. Si tengo 21 de dim, puedo poner 20///
     char apellido[50]={"Garcia"};
 
-    printf("Letras= %s", letras);
-    printf("\n%s", saludo);
 
-    printf("\n");
-    gets(nombre); ///como un scanf para strings///
-    printf("%s", nombre);
+    validos=cargaArregloRandom(array,15,10);
+    muestraArreglo(array,validos);
 
-    printf("\n%s", apellido);
 
-    strcpy(apellido,"tomas");
-    printf("\n%s", apellido);
+    ordenar(array,validos);
+    printf("\nArreglo ordenado\n");
+    muestraArreglo(array,validos);
+
+
+//    printf("Letras= %s", letras);
+//    printf("\n%s", saludo);
+//
+//    printf("\n");
+//    gets(nombre); ///como un scanf para strings///
+//    printf("%s", nombre);
+//
+//    printf("\n%s", apellido);
+//
+//    strcpy(apellido,"tomas");
+//    printf("\n%s", apellido);
 
 
 //    validos = cargaArregloUsuario(array,15,&validos);
@@ -213,4 +225,20 @@ int buscaMenor(int a[], int val)
     }
 
     return posMenor;
+}
+
+void insertar(int a[], int i, int dato){
+
+    while(i>=0 && dato<a[i]){
+        a[i+1]=a[i];
+        i--;
+    }
+    a[i+1]=dato;
+}
+
+void ordenar(int a[],int val){
+    int i=0;
+    for(i;i<val;i++){
+        insertar(a,i,a[i+1]);
+    }
 }
