@@ -1,0 +1,213 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+
+void cargaMatrizUsuario(int filas, int columnas, int m[filas][columnas]);
+void muestraMatriz(int filas, int columnas, int m[filas][columnas]);
+void cargaMatrizRandom(int filas, int columnas, int m[filas][columnas]);
+int sumaMatriz(int filas, int columnas, int m[filas][columnas]);
+float promedioMatriz(int filas, int columnas, int t);
+int buscarMatriz(int filas, int columnas, int m[filas][columnas], int dato);
+void muestraArregloString(char n[][30], int val);
+int cargaArregloChar(char c[][30],int val, int dim);
+int cargaArregloChar2(int d,char c[][d],int val, int dim, char label[]);
+void muestraArregloString2(int d, char n[][d], int val);
+int buscaString(char n[][30], int val, char palabra[]);
+void insertarStringOrdenado(char a[][30], int i, char dato[][30]);
+void ordenarString(char a[][30], int val);
+
+#define DIM 100
+
+int main()
+{
+    char nombre[DIM][30];
+    int validos=0;
+    char palabra[30];
+
+    validos= cargaArregloChar2(30,nombre,validos,DIM,"Ingrese un nombre: \t");
+    muestraArregloString2(30,nombre, validos);
+
+    printf("VALIDOS: %d", validos);
+
+    printf("\nIngrese una palabra para buscar en el arreglo:  ");
+    fflush(stdin);
+    gets(palabra);
+
+    printf("\nLa palabra se encuentra en el arreglo en la fila: %d / -1 si la palabra no se encuentra",buscaString(nombre, validos,palabra));
+
+    ordenarString(nombre,validos);
+
+    getch();
+
+    muestraArregloString(nombre,validos);
+
+//   //Declaracion de la matriz
+//   int filas = 2;
+//   int columnas = 2;
+//   int matriz[filas][columnas];
+//
+//   //Carga de la matriz
+//   cargaMatrizUsuario(filas, columnas, matriz);
+//   int suma = sumaMatriz(filas, columnas, matriz);
+//   float promedio = promedioMatriz(filas, columnas, suma);
+//
+//   //Muestra la matriz por pantalla
+//   printf("\n Listado de la Matriz \n\n");
+//   muestraMatriz(filas, columnas, matriz);
+//
+//   //Suma y promedio de los elementos de la matriz
+//   printf("\nLa suma de los elementos de la matriz es %i\n", suma);
+//   printf("\nEl promedio de los elementos de la matriz es %.2f\n", promedio);
+//
+//   //Busqueda de un dato en la matriz
+//   if(buscarMatriz(filas, columnas, matriz, 5) == 1){
+//  	printf("\nEl 5 se encuentra en la matriz\n");
+//   }else{
+//  	printf("\nEl 5 no se encuentra en la matriz\n");
+//   }
+
+   return 0;
+}
+
+//Ejercicio 1
+void cargaMatrizUsuario(int filas, int columnas, int m[filas][columnas]){
+   for(int i = 0; i < filas; i++){
+  	for(int j = 0; j < columnas; j++){
+       	printf("Ingrese un elemento: ");
+       	scanf("%i", &m[i][j]);
+       	system("cls");
+  	}
+   }
+}
+
+//Ejercicio 2
+void muestraMatriz(int filas, int columnas, int m[filas][columnas]){
+   for(int i = 0; i < filas; i++){
+  	for(int j = 0; j < columnas; j++){
+       	printf("%3i | ", m[i][j]);
+  	}
+   	printf("\n");
+   }
+}
+
+//Ejercicio 3
+void cargaMatrizRandom(int filas, int columnas, int m[filas][columnas]){
+   for(int i = 0; i < filas; i++){
+  	for(int j = 0; j < columnas; j++){
+       	m[i][j] = rand() % 20;
+  	}
+   }
+}
+
+//Ejercicio 4
+int sumaMatriz(int filas, int columnas, int m[filas][columnas]){
+   int total = 0;
+
+   for(int i = 0; i < filas; i++){
+  	for(int j = 0; j < columnas; j++){
+       	total += m[i][j];
+  	}
+   }
+   return total;
+}
+
+//Ejercicio 5
+float promedioMatriz(int filas, int columnas, int t){
+   int sumaElementos = filas * columnas;
+
+   float promedio = (float) t / sumaElementos;
+
+   return promedio;
+}
+
+//Ejercicio 6
+int buscarMatriz(int filas, int columnas, int m[filas][columnas], int dato){
+   int flag = 0;
+   for(int i = 0; i < filas; i++){
+  	for(int j = 0; j < columnas; j++){
+       	if(m[i][j] == dato){
+           	flag = 1;
+       	}
+  	}
+   }
+   return flag;
+}
+void muestraArregloString(char n[][30], int val){
+    for(int i=0; i<val; i++){
+        printf("\n%s", n[i]);
+    }
+    printf("\n-------------------------------");
+}
+int cargaArregloChar(char c[][30],int val, int dim){
+    char opcion=0;
+    while(val<dim && opcion!=27){
+        printf("\nIngrese un nombre: ");
+        fflush(stdin);
+        gets(c[val]);
+        val++;
+        printf("\nCualquier tecla para continuar / ESC para salir");
+        opcion = getch();
+    }
+    return val;
+}
+
+int cargaArregloChar2(int d,char c[][d],int val, int dim, char label[]){ //d nos va a permitir cargar determinada cantidad de caracteres dependiendo de la situacion//
+    char opcion=0;
+    char s[d];
+    while(val<dim && opcion!=27){
+        printf("\n %s", label);
+        gets(s);
+        if(strlen(s)<dim){
+            strcpy(c[val], s);
+            val++;
+        }else{
+            printf("\n Se paso de la dimension");
+            getch();
+        }
+        printf("\n ESC para salir / Cualquier tecla para continuar");
+        opcion = getch();
+    }
+    return val;
+}
+
+void muestraArregloString2(int d, char n[][d], int val){
+    for(int i=0; i<val; i++){
+        printf("\n%s", n[i]);
+    }
+    printf("\n-------------------------------");
+}
+
+int buscaString(char n[][30], int val, char palabra[]){
+    int flag=-1;
+    for(int i=0; i<val;i++){
+            if(strcmpi(n[i], palabra)==0){
+                flag=i;
+            }
+    }
+
+    return flag;
+}
+
+int buscaPosMenorArregloString(int d, char a[][d], int val){
+    int posMenor=0;
+    for(int i=1; i<val; i++){
+        if(strcmp(a[i],a[posMenor])<0){
+            posMenor=i;
+        }
+    }
+    return posMenor;
+}
+void insertarStringOrdenado(char a[][30], int i, char dato[][30]){
+
+    while(i>=0 && strcmp(dato,a[i])<0){
+        strcpy(a[i+1],a[i]);
+        i--;
+    }
+    strcpy(a[i+1], dato);
+}
+void ordenarString(char a[][30], int val){
+
+    for(int i=0; i<val;i++){
+        insertarStringOrdenado(a,i,a[i+1]);
+    }
+}
