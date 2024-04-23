@@ -272,3 +272,21 @@ int buscaStringOrdenado(int d, char a[][d], int val, char palabra[]){
 ////    }
 ////    strcpy(a[i+1], dato);
 ////}
+
+
+void ordenaPorInsercion(int d, char a[][d], int val){
+    char stringAux[d];
+    for(int i=0; i<val-1; i++){
+        strcpy(stringAux, a[i+1]);
+        insertaOrdenado(d,a,i,stringAux);
+    }
+}
+
+void insertaOrdenado(int d, char a[][d], int val, char dato[]){
+    int i=val;
+    while(i>=0 && strcmp(dato,a[i])<0){
+        strcpy(a[i+1], a[i]);
+        i--;
+    }
+    strcpy(a[i+1], dato);
+}
