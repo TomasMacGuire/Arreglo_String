@@ -1,0 +1,162 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <string.h>
+#include "alumno.h"
+
+#define DIM 100
+
+typedef struct{
+    char calle[30];
+    int altura;
+    char ciudad[30];
+}stDomicilio;
+
+
+
+
+int cargaAlumnos(stAlumno a[], int val, int dim);
+void muestraAlumnos(stAlumno a[], int val);
+
+int main()
+{
+    stAlumno alumnos[DIM];
+    int valAlumnos=0;
+
+    valAlumnos=cargaAlumnos(alumnos,valAlumnos,DIM);
+
+    printf("\nLISTADO: \n");
+    muestraAlumnos(alumnos,valAlumnos);
+
+    return 0;
+}
+
+
+int cargaAlumnos(stAlumno a[], int val, int dim){
+    char opcion=0;
+    while(val<dim && opcion!=27){
+        system("cls");
+        a[val]=cargaUnAlumno();
+        val++;
+        printf("\nESC PARA SALIR / Cualquier tecla para continuar");
+        opcion=getch();
+    }
+
+    return val;
+}
+void muestraAlumnos(stAlumno a[], int val){
+    for(int i=0;i<val;i++){
+        muestraUnAlumno(a[i]);
+        printf("\n============================\n");
+    }
+}
+
+stAlumno buscaMenorLegajo(stAlumno a[], int val){
+    stAlumno alumnoMenor;
+    alumnoMenor.legajo=-1;
+    int i=0;
+    if(val>0){
+        alumnoMenor=a[i];
+        while(i<val){
+            if(a[i].legajo<alumnoMenor.legajo){
+             alumnoMenor=a[i];
+            }
+            i++;
+        }
+    }
+    return alumnoMenor;
+}
+
+
+stAlumno buscaMenorApellido(stAlumno a[], int v){
+    stAlumno alumnoMenor;
+    alumnoMenor.legajo = -1;
+    int i = 0;
+    if(v>0){
+        alumnoMenor = a[i];
+        i++;
+        while(i<v){
+           if(strcmp(a[i].apellido, alumnoMenor.apellido) < 0){
+                alumnoMenor = a[i];
+           }
+           i++;
+        }
+    }
+
+    return alumnoMenor;
+}
+
+
+
+
+
+//ESTO VA EN LA LIBRERIA .H
+#ifndef ALUMNO_H_INCLUDED
+#define ALUMNO_H_INCLUDED
+
+typedef struct{
+    int legajo;
+    char nombre[30];
+    char apellido[40];
+    int diaNac;
+    int mesNac;
+    int anioNac;
+}stAlumno;
+
+stAlumno cargaUnAlumno();
+void muestraUnAlumno(stAlumno a);
+
+#endif // ALUMNO_H_INCLUDED
+//
+
+//ESTO VA EN LA LIBRERIA .C
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <string.h>
+#include "alumno.h"
+
+stAlumno cargaUnAlumno(){
+    stAlumno a;
+    printf("Ingrese numero de legajo: ");
+    scanf("%d", &a.legajo);
+    printf("\nIngrese el nombre del alumno:  ");
+    fflush(stdin);
+    gets(a.nombre);
+    printf("\nIngrese el apellido del alumno:  ");
+    fflush(stdin);
+    gets(a.apellido);
+    printf("\nIngrese dia de nacimiento:  ");
+    scanf("%d", &a.diaNac);
+    printf("\nIngrese mes de nacimiento:  ");
+    scanf("%d", &a.mesNac);
+    printf("\nIngrese a%co de nacimiento:  ", 164);
+    scanf("%d", &a.anioNac);
+
+    return a;
+}
+
+void muestraUnAlumno(stAlumno a){
+    printf("\nLegajo: %d", a.legajo);
+    printf("\nNombre: %s", a.nombre);
+    printf("\nApellido: %s", a.apellido);
+    printf("\nFecha de nacimiento: %d / %d / %d",a.diaNac,a.mesNac,a.anioNac);
+}
+//
+
+
+/*EJEMPLO ARREGLOS PARALELOS
+int cargaAlumnos(int pal, int notas[], char nombre[][pal],int legajo[],int val, int dim ){
+    char opcion=0;
+    while(val<dim){
+        fflush(stdin);
+        scanf("%s", nombre[val]);
+        scanf("%d", notas[val]);
+        scanf("%d", legajo[val]);
+        val++;
+    }
+    return val;
+
+}
+*/
+
