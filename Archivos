@@ -1,0 +1,31 @@
+#define AR_ALUMNOS "alumnos.dat"
+
+int main()
+{
+    printf("Hello world!\n");
+    return 0;
+}
+
+void cargaArchAlumnosRandom(char nombreArchivo[], int cant){
+    int i=0;
+    stAlumno alumno;
+    FILE*archi= fopen(nombreArchivo, "ab")
+    if(archi){
+        while(i<cant){
+            alumno= getAlumnoRandom();
+            fwrite(&alumno, sizeof(stAlumno),1,archi);
+            i++;
+        }
+        fclose(archi);
+    }
+}
+void muestraArchAlumnos(char nombreArchivo[]){
+    stAlumno alumno;
+    FILE*archi= fopen(nombreArchivo,"rb);
+    if(archi){
+      while(fread(&alumno,sizeof(stAlumno),1,archi)>0){
+        muestraUnAlumno(alumno);
+      }      
+      fclose(archi);  
+    }
+}
